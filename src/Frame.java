@@ -1,16 +1,17 @@
 import javax.swing.*;
 
-class Manager extends JFrame {
+class Frame extends JFrame {
 
-    private static final int WIDTH = 1280;
-    private static final int HEIGHT = 720;
+    private static final int WIDTH = 1400;
+    private static final int HEIGHT = 800;
 
-    Manager(SolarSystem solarSystem) {
+    Frame() {
         this.setSize(WIDTH, HEIGHT);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
-        PaintPlanet paintPlanet = new PaintPlanet(solarSystem);
-        this.add(paintPlanet);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        DrawPanel drawPanel = new DrawPanel();
+        this.add(drawPanel);
     }
 
     static int getWIDTH() {

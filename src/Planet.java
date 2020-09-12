@@ -1,24 +1,11 @@
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 public class Planet {
     private String name;
     private Color colorPlanet;
     private double radiusRotation;
     private double radiusPlanet;
-    private double x;
-    private double y;
-
-    Planet() {
-    }
-
-    Planet(String name, Color colorPlanet, double radiusRotation, double radiusPlanet, double x, double y) {
-        this.name = name;
-        this.colorPlanet = colorPlanet;
-        this.radiusRotation = radiusRotation;
-        this.radiusPlanet = radiusPlanet;
-        this.x = x;
-        this.y = y;
-    }
 
     Planet(String name, Color colorPlanet, double radiusRotation, double radiusPlanet) {
         this.name = name;
@@ -29,10 +16,6 @@ public class Planet {
 
     public String getName() {
         return name;
-    }
-
-    void setName(String name) {
-        this.name = name;
     }
 
     Color getColorPlanet() {
@@ -47,11 +30,9 @@ public class Planet {
         return radiusPlanet;
     }
 
-    double getX() {
-        return x;
+    Rectangle2D.Double getRectName(Graphics2D graphics2D, double x, double y) {
+        return new Rectangle2D.Double((float) x - radiusPlanet, (float) y,
+                graphics2D.getFontMetrics().stringWidth(name), Defaults.LABEL_FONT.getSize());
     }
 
-    double getY() {
-        return y;
-    }
 }
