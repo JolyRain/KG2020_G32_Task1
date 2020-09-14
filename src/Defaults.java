@@ -1,4 +1,7 @@
+import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 class Defaults {
     static final Color MERCURY_COLOR = new Color(130, 65, 20);
@@ -13,4 +16,6 @@ class Defaults {
     static final Font LABEL_FONT = new Font("monospace", Font.PLAIN, 10);
     static final BasicStroke STROKE = new BasicStroke(1);
     static final int NUMBER_OF_STARS = 1000;
+    static final Color TOWER_UFO_COLOR = new Color(1f, 1f, 0f, 0.5f);
+//    static final Image a = new
 }

@@ -1,9 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Path2D;
-import java.awt.geom.QuadCurve2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 
 class DrawPanel extends JPanel {
 
@@ -20,23 +19,13 @@ class DrawPanel extends JPanel {
         graphics.fillRect(0, 0, width, height);
     }
 
-    private void printStars(Graphics2D graphics2D, int numberOfStars, int width, int height) {
+    private void printStars(Graphics2D graphics2D, int width, int height) {
         graphics2D.setColor(Color.WHITE);
-        for (int i = 0; i < numberOfStars; i++) {
+        for (int i = 0; i < Defaults.NUMBER_OF_STARS; i++) {
             double x = Math.random() * width;
             double y = Math.random() * height;
             graphics2D.fill(star(x, y));
         }
-    }
-
-    private void paintUFO(Graphics2D graphics2D) {
-        graphics2D.setColor(new Color(1f, 1f, 0f, 0.5f));
-        graphics2D.fillOval(75, 480, 50, 50);
-        graphics2D.setColor(Color.DARK_GRAY);
-        graphics2D.fillOval(50, 500, 100, 30);
-        graphics2D.setColor(Color.RED);
-        graphics2D.drawOval(50, 500, 100, 30);
-
     }
 
     @Override
@@ -48,22 +37,47 @@ class DrawPanel extends JPanel {
         graphics2D.setStroke(Defaults.STROKE);
         graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         paintSpace(graphics, width, height);
-        printStars(graphics2D, Defaults.NUMBER_OF_STARS, width, height);
+        printStars(graphics2D, width, height);
         paintSun(graphics2D);
         paintPlanets(graphics2D, solarSystem.getPlanets());
-        paintUFO(graphics2D);
+        drawUFO(graphics2D, new UFO(50, 100, 100));
+
+    }
+
+//    private BufferedImage createResizedCopy(Image originalImage, int scaledWidth, int scaledHeight) {
+//        BufferedImage scaledImage = new BufferedImage(scaledWidth, scaledHeight, BufferedImage.TYPE_INT_ARGB);
+//        Graphics2D g = scaledImage.createGraphics();
+//        g.drawImage(originalImage, 0, 0, scaledWidth, scaledHeight, null);
+//        g.dispose();
+//        g.setComposite(AlphaComposite.Src);
+//        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+//        g.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
+//        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+//        return scaledImage;
+//    }
+
+    public void drawUFO(Graphics2D graphics2D, UFO ufo) {
+        int x = ufo.getX();
+        int y = ufo.getY();
+        int width = ufo.getWidth();
+        int height = width / 2;
+        graphics2D.setColor(Defaults.TOWER_UFO_COLOR);
+        graphics2D.fillOval(x + width / 4, y, width / 2, height);
+        graphics2D.setColor(Color.DARK_GRAY);
+        graphics2D.fillOval(x, y + height / 2, width, height / 2);
+//        graphics2D.drawString("НЛО", );
     }
 
     private void paintPlanet(Graphics2D graphics2D, Planet planet) {
         double randomAngle = Math.random() * Double.MAX_VALUE;
         double x = SolarSystem.getSUN_X() + planet.getRadiusRotation() * Math.cos(randomAngle);
         double y = SolarSystem.getSUN_Y() + planet.getRadiusRotation() * Math.sin(randomAngle);
-        double r = planet.getRadiusPlanet();
+        int r = planet.getRadiusPlanet();
 
         graphics2D.setColor(Color.WHITE);
         graphics2D.draw(circle(SolarSystem.getSUN_X(), SolarSystem.getSUN_Y(), planet.getRadiusRotation()));
-        graphics2D.setColor(planet.getColorPlanet());
-        graphics2D.fill(circle(x, y, r));
+
+        graphics2D.drawImage(planet.getTexture(), (int) (x - r), (int) (y - r), this);
 
         graphics2D.setColor(Color.WHITE);
         Rectangle2D nameRect = planet.getRectName(graphics2D, x, y);
@@ -81,9 +95,10 @@ class DrawPanel extends JPanel {
         double x = SolarSystem.getSUN_X();
         double y = SolarSystem.getSUN_Y();
         double r = planet.getRadiusPlanet();
-        RadialGradientPaint grad = new RadialGradientPaint((float) x, (float) y, (float) r, dist, colors);
-        graphics2D.setPaint(grad);
-        graphics2D.fill(circle(x, y, r));
+        graphics2D.drawImage(planet.getTexture(), (int) (x - r), (int) (y - r), this);
+//        RadialGradientPaint grad = new RadialGradientPaint((float) x, (float) y, (float) r, dist, colors);
+//        graphics2D.setPaint(grad);
+//        graphics2D.fill(circle(x, y, r));
     }
 
     private Shape circle(double x, double y, double r) {
@@ -93,7 +108,6 @@ class DrawPanel extends JPanel {
     private Shape star(double x, double y) {
         return new Ellipse2D.Double(x, y, 1, 1);
     }
-
 
 
 }
