@@ -8,7 +8,6 @@ public class Planet {
     private BufferedImage texture;
     private int radiusRotation;
     private int radiusPlanet;
-//    private Im
 
     Planet(String name, int radiusRotation, int radiusPlanet) {
         this.name = name;
