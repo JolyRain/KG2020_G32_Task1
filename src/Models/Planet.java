@@ -1,3 +1,7 @@
+package Models;
+
+import Utils.Defaults;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -20,19 +24,19 @@ public class Planet {
         return name;
     }
 
-    BufferedImage getTexture() {
+    public BufferedImage getTexture() {
         return texture;
     }
 
-    int getRadiusRotation() {
+    public int getRadiusRotation() {
         return radiusRotation;
     }
 
-    int getRadiusPlanet() {
+    public int getRadiusPlanet() {
         return radiusPlanet;
     }
 
-    Rectangle2D.Double getRectName(Graphics2D graphics2D, double x, double y) {
+    public Rectangle2D.Double getRectName(Graphics2D graphics2D, double x, double y) {
         return new Rectangle2D.Double((float) x - radiusPlanet, (float) y,
                 graphics2D.getFontMetrics().stringWidth(name), Defaults.LABEL_FONT.getSize());
     }
@@ -45,11 +49,11 @@ public class Planet {
         BufferedImage scaledImage = new BufferedImage(scaledWidth, scaledHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = scaledImage.createGraphics();
         g.drawImage(originalImage, 0, 0, scaledWidth, scaledHeight, null);
-        g.dispose();
         g.setComposite(AlphaComposite.Src);
         g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+        g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g.dispose();
         return scaledImage;
     }
 

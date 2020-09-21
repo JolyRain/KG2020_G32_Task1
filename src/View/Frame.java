@@ -1,11 +1,13 @@
+package View;
+
 import javax.swing.*;
 
-class Frame extends JFrame {
+public class Frame extends JFrame {
 
     private static final int WIDTH = 1400;
     private static final int HEIGHT = 800;
 
-    Frame() {
+    public Frame() {
         this.setSize(WIDTH, HEIGHT);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
@@ -14,11 +16,11 @@ class Frame extends JFrame {
         this.add(drawPanel);
     }
 
-    static int getWIDTH() {
+    public static int getWIDTH() {
         return WIDTH;
     }
 
-    static int getHEIGHT() {
+    public static int getHEIGHT() {
         return HEIGHT;
     }
 }
